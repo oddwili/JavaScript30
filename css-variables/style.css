@@ -1,0 +1,15 @@
+html {
+    --spacing: 10px;
+    --blur: 10px;
+    --base: #ffc600;
+}
+
+.highlight {
+    color: var(--base);
+}
+
+img {
+    padding: var(--spacing);
+    background: var(--base);
+    filter: blur(var(--blur));
+}
