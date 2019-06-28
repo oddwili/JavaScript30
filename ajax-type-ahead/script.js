@@ -24,20 +24,35 @@ function displayMatch() {
   newSearchSuggestions.classList.add('suggestions');
 
   matchArray.forEach((match) => {
-  let suggestionEl = document.createElement('li');
-  let populationEl = document.createElement('span');
+    let suggestionEl = document.createElement('li');
+    let populationEl = document.createElement('span');
 
-  suggestionEl.textContent = `${match.city}, ${match.state}`
-  populationEl.textContent = `${match.population}`;
-  suggestionEl.appendChild(populationEl);
+    suggestionEl.textContent = `${match.city}, ${match.state}`
+    populationEl.textContent = `${match.population}`;
+    suggestionEl.appendChild(populationEl);
 
-  newSearchSuggestions.appendChild(suggestionEl);
+    newSearchSuggestions.appendChild(suggestionEl);
   });
 
   searchForm.appendChild(newSearchSuggestions);
   searchSuggestions = searchForm.querySelector('.suggestions');
 }
 
+// debounce from https://davidwalsh.name/javascript-debounce-function
+function debounce(func, wait, immediate) {
+	var timeout;
+	return function() {
+		var context = this, args = arguments;
+		var later = function() {
+			timeout = null;
+			if (!immediate) func.apply(context, args);
+		};
+		var callNow = immediate && !timeout;
+		clearTimeout(timeout);
+		timeout = setTimeout(later, wait);
+		if (callNow) func.apply(context, args);
+	};
+};
 
 searchInput.addEventListener('change', displayMatch);
-searchInput.addEventListener('keyup', displayMatch);
+searchInput.addEventListener('keyup', debounce(displayMatch, 200));
