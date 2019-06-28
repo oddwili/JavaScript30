@@ -11,8 +11,8 @@ fetch(endpoint)
 
 function matchWord(wordToMatch, cities) {
   return cities.filter(place => {
-    const regex = new RegExp(wordToMatch, 'gi');
-    return place.city.match(regex) || place.state.match(regex);
+  const regex = new RegExp(wordToMatch, 'gi');
+  return place.city.match(regex) || place.state.match(regex);
   });
 }
 
@@ -38,6 +38,21 @@ function displayMatch() {
   searchSuggestions = searchForm.querySelector('.suggestions');
 }
 
+// debounce from https://davidwalsh.name/javascript-debounce-function
+function debounce(func, wait, immediate) {
+	var timeout;
+	return function() {
+		var context = this, args = arguments;
+		var later = function() {
+			timeout = null;
+			if (!immediate) func.apply(context, args);
+		};
+		var callNow = immediate && !timeout;
+		clearTimeout(timeout);
+		timeout = setTimeout(later, wait);
+		if (callNow) func.apply(context, args);
+	};
+};
 
 searchInput.addEventListener('change', displayMatch);
-searchInput.addEventListener('keyup', displayMatch);
+searchInput.addEventListener('keyup', debounce(displayMatch, 200));
