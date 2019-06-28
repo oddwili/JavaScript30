@@ -11,8 +11,8 @@ fetch(endpoint)
 
 function matchWord(wordToMatch, cities) {
   return cities.filter(place => {
-    const regex = new RegExp(wordToMatch, 'gi');
-    return place.city.match(regex) || place.state.match(regex);
+  const regex = new RegExp(wordToMatch, 'gi');
+  return place.city.match(regex) || place.state.match(regex);
   });
 }
 
@@ -24,14 +24,14 @@ function displayMatch() {
   newSearchSuggestions.classList.add('suggestions');
 
   matchArray.forEach((match) => {
-    let suggestionEl = document.createElement('li');
-    let populationEl = document.createElement('span');
+  let suggestionEl = document.createElement('li');
+  let populationEl = document.createElement('span');
 
-    suggestionEl.textContent = `${match.city}, ${match.state}`
-    populationEl.textContent = `${match.population}`;
-    suggestionEl.appendChild(populationEl);
+  suggestionEl.textContent = `${match.city}, ${match.state}`
+  populationEl.textContent = `${match.population}`;
+  suggestionEl.appendChild(populationEl);
 
-    newSearchSuggestions.appendChild(suggestionEl);
+  newSearchSuggestions.appendChild(suggestionEl);
   });
 
   searchForm.appendChild(newSearchSuggestions);
